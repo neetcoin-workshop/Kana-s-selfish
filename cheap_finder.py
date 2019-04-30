@@ -17,8 +17,23 @@ def jsonConversion(jsonStr):
     return data
 
 
+#BTC価格の抽出とソート
+def sortByPrice(list_org):
+    list_BTC = []
+
+    for list_all in list_org:
+        if '_BTC' in list_all['id']:
+            list_BTC.append(list_all)
+
+    list_BTC_sorted = sorted(list_BTC, key = lambda x:x['bid'])
+
+    return list_BTC_sorted
+
+
 resStr = dataGet()
 res = jsonConversion(resStr)
+ticker_BTC = sortByPrice(res)
 
-for ticker in res: 
-    print(ticker['id'] + ':' + ticker['bid'])
+for price in ticker_BTC:
+    print(price['id'] + ':' + price['bid'])
+
